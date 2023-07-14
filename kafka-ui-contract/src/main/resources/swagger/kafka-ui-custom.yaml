@@ -1,0 +1,70 @@
+openapi: 3.0.0
+info:
+  description: Api Documentation
+  version: 0.1.0
+  title: Api Documentation
+  termsOfService: urn:tos
+  contact: { }
+  license:
+    name: Apache 2.0
+    url: https://www.apache.org/licenses/LICENSE-2.0
+tags:
+  - name: /api/clusters/custom
+servers:
+  - url: /localhost
+
+paths:
+  /api/clusters/custom:
+    get:
+      tags:
+        - CustomClusters
+      summary: getCustomClusters
+      operationId: getCustomClusters
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/CustomResponse'
+
+components:
+  schemas:
+    CustomResponse:
+      type: object
+      properties:
+        name:
+          type: string
+        defaultCluster:
+          type: boolean
+        brokerCount:
+          type: integer
+        onlinePartitionCount:
+          type: integer
+        topicCount:
+          type: integer
+        bytesInPerSec:
+          type: number
+        bytesOutPerSec:
+          type: number
+        readOnly:
+          type: boolean
+        version:
+          type: string
+        features:
+          type: array
+          items:
+            type: string
+            enum:
+              - SCHEMA_REGISTRY
+              - KAFKA_CONNECT
+              - KSQL_DB
+              - TOPIC_DELETION
+              - KAFKA_ACL_VIEW # get ACLs listing
+              - KAFKA_ACL_EDIT # create & delete ACLs
+      required:
+        - id
+        - name
+        - status
